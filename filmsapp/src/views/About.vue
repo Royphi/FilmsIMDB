@@ -1,23 +1,26 @@
 <template>
    <div class="about">
     <div v-if="!isLoading">
-      <h3>aqui
-        {{film.title}}
-      </h3>
       <p>
-        <b>Rank: </b>{{film.rank}}
+        <b>Title:</b>{{film.title}}
       </p>
       <p>
-        <b>rankUpDown: </b>{{film.rankUpDown}}
+        <b>Type: </b>{{film.type}}
       </p>
       <p>
-        <b>Fulltitle: </b>{{film.Fulltitle}}
+        <b>Year: </b>{{film.year}}
       </p>
       <p>
-        <b>Year: </b>{{film.Year}}
+        <b>ReleaseDate: </b>{{film.releaseDate}}
       </p>
       <p>
-        <b>crew: </b>{{film.crew}}
+        <b>Directors: </b>{{film.directors}}
+      </p>
+      <p>
+        <b>Writers: </b>{{film.writers}}
+      </p>
+      <p>
+        <b>Stars: </b>{{film.stars}}
       </p>
       <p>
         <router-link to="/">
@@ -34,24 +37,22 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import FilmService from '../services/FilmService'
-
+import CharacterService from '../services/FilmService'
 export default defineComponent({
   name: 'About',
   setup () {
-    const service = new FilmService()
+    const service = new CharacterService()
     const film = service.getFilm()
-    console.log(film)
     const isLoading = ref<boolean>(true)
     const { id } = useRoute().params
-
     onMounted(async () => {
       await service.fetchById(id)
+      isLoading.value = false
     })
-
-    return (
+    return {
+      film,
       isLoading
-    )
+    }
   }
 })
 </script>

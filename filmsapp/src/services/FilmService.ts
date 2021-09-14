@@ -19,6 +19,7 @@ class FilmService {
     }
 
     async fetchAll (): Promise<void> {
+      console.log('entra')
       try {
         const url = 'https://imdb-api.com/en/API/MostPopularMovies/k_k7qs2nng'
         const response = await fetch(url)
@@ -32,12 +33,13 @@ class FilmService {
     }
 
     async fetchById (id: any): Promise<void> {
+      console.log('entra')
       try {
         const url = `https://imdb-api.com/en/API/Title/k_k7qs2nng/${id}`
         const response = await fetch(url)
         const json = await response.json()
-        this.film.value = await json.item
-        console.log(json)
+        this.film.value = await json
+        console.log(this.film.value)
       } catch (error) {
         console.log(error)
       }
